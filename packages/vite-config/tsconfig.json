@@ -3,5 +3,5 @@
   "compilerOptions": {
     "outDir": "dist"
   },
-  "include": ["lib", "index.mts", "tailwind.d.ts"]
+  "include": ["lib", "index.mts"]
 }
