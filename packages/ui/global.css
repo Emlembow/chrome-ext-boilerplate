@@ -1,6 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/* Scan the UI package and every consumer (pages + chrome-extension) for class usage. */
+@source '../../packages/ui/lib/**/*.{ts,tsx}';
+@source '../../pages/**/*.{ts,tsx,html}';
+@source '../../chrome-extension/**/*.{ts,tsx,html}';
 
 body {
   margin: 0;

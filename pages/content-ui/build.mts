@@ -1,17 +1,17 @@
 import { resolve } from 'node:path';
+import { IS_DEV } from '@extension/env';
 import { makeEntryPointPlugin } from '@extension/hmr';
 import { getContentScriptEntries, withPageConfig } from '@extension/vite-config';
-import { IS_DEV } from '@extension/env';
 import { build } from 'vite';
-import { build as buildTW } from 'tailwindcss/lib/cli/build';
 
 const rootDir = resolve(import.meta.dirname);
 const srcDir = resolve(rootDir, 'src');
 const matchesDir = resolve(srcDir, 'matches');
 
-const configs = Object.entries(getContentScriptEntries(matchesDir)).map(([name, entry]) => ({
-  name,
-  config: withPageConfig({
+// Tailwind v4 + @tailwindcss/vite handles CSS at Vite build time, so the entry
+// can `import inlineCss from './index.css?inline'` directly — no separate CLI step.
+const builds = Object.entries(getContentScriptEntries(matchesDir)).map(async ([name, entry]) => {
+  const config = withPageConfig({
     mode: IS_DEV ? 'development' : undefined,
     resolve: {
       alias: {
@@ -22,26 +22,16 @@ const configs = Object.entries(getContentScriptEntries(matchesDir)).map(([name, 
     plugins: [IS_DEV && makeEntryPointPlugin()],
     build: {
       lib: {
-        name: name,
+        name,
         formats: ['iife'],
         entry,
         fileName: name,
       },
       outDir: resolve(rootDir, '..', '..', 'dist', 'content-ui'),
     },
-  }),
-}));
+  });
 
-const builds = configs.map(async ({ name, config }) => {
-  const folder = resolve(matchesDir, name);
-  const args = {
-    ['--input']: resolve(folder, 'index.css'),
-    ['--output']: resolve(rootDir, 'dist', name, 'index.css'),
-    ['--config']: resolve(rootDir, 'tailwind.config.ts'),
-    ['--watch']: IS_DEV,
-  };
-  await buildTW(args);
-  //@ts-expect-error This is hidden property into vite's resolveConfig()
+  // @ts-expect-error Hidden flag — tells Vite not to load a vite.config from disk.
   config.configFile = false;
   await build(config);
 });
