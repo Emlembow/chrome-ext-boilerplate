@@ -47,8 +47,11 @@ export const useStorage = <
     storageMap.set(storage, wrapPromise(storage.get()));
   }
 
+  // Suspense-style lazy init: ref tracks whether the store has produced data once.
+  // eslint-disable-next-line react-hooks/refs
   if (_data || initializedRef.current) {
     storageMap.set(storage, { read: () => _data });
+    // eslint-disable-next-line react-hooks/refs
     initializedRef.current = true;
   }
 
