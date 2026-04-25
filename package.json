@@ -1,14 +1,29 @@
 {
-  "name": "chrome-extension-boilerplate-react-vite",
-  "version": "0.5.0",
-  "description": "chrome extension boilerplate",
+  "name": "chrome-ext-boilerplate",
+  "version": "1.0.0",
+  "description": "Mike Lembo's personal Chrome extension boilerplate (React 19, Vite 8 + Rolldown, Tailwind 4, ESLint 10, TypeScript 6, MV3, pnpm + Turbo)",
   "license": "MIT",
   "private": true,
   "sideEffects": false,
+  "author": "Mike Lembo <mike@lembo.email>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite.git"
+    "url": "https://github.com/Emlembow/chrome-ext-boilerplate.git"
   },
+  "homepage": "https://github.com/Emlembow/chrome-ext-boilerplate#readme",
+  "bugs": "https://github.com/Emlembow/chrome-ext-boilerplate/issues",
+  "keywords": [
+    "chrome-extension",
+    "boilerplate",
+    "react",
+    "vite",
+    "tailwindcss",
+    "typescript",
+    "manifest-v3",
+    "monorepo",
+    "pnpm",
+    "turbo"
+  ],
   "type": "module",
   "scripts": {
     "clean:bundle": "rimraf dist && turbo clean:bundle",
@@ -27,6 +42,9 @@
     "zip:firefox": "pnpm build:firefox && pnpm -F zipper zip",
     "e2e": "pnpm zip && turbo e2e",
     "e2e:firefox": "pnpm zip:firefox && turbo e2e",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "lint": "turbo lint --continue",
     "lint:fix": "turbo lint:fix --continue",
     "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
@@ -42,6 +60,8 @@
     "react-dom": "^19.2.5"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
     "@eslint/compat": "^2.0.5",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^10.0.1",
@@ -52,6 +72,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/parser": "^8.59.0",
+    "@vitest/coverage-v8": "^4.1.5",
     "cross-env": "^10.1.0",
     "deepmerge": "^4.3.1",
     "eslint": "^10.2.1",
@@ -79,7 +100,8 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.0",
     "vite": "^8.0.10",
-    "vite-plugin-node-polyfills": "^0.26.0"
+    "vite-plugin-node-polyfills": "^0.26.0",
+    "vitest": "^4.1.5"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json}": [

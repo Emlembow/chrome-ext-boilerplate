@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "editorconfig.editorconfig",
+    "ms-vscode.vscode-typescript-next",
+    "yoavbls.pretty-ts-errors",
+    "antfu.iconify",
+    "eamodio.gitlens",
+    "github.vscode-github-actions",
+    "stylelint.vscode-stylelint",
+    "ms-playwright.playwright"
+  ]
+}
