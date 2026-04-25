@@ -6,13 +6,9 @@ import { defineConfig } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import type { UserConfig } from 'vite';
 
-export const watchOption = IS_DEV
-  ? {
-      chokidar: {
-        awaitWriteFinish: true,
-      },
-    }
-  : undefined;
+// Vite 8 uses Rolldown under the hood; WatcherOptions exposes `buildDelay`
+// (replacing rollup's chokidar.awaitWriteFinish). 100ms lets writes settle.
+export const watchOption = IS_DEV ? { buildDelay: 100 } : undefined;
 
 export const withPageConfig = (config: UserConfig) =>
   defineConfig(
