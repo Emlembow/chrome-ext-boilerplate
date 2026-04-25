@@ -40,11 +40,15 @@
     "dev:firefox": "pnpm set-global-env CLI_CEB_DEV=true CLI_CEB_FIREFOX=true && pnpm base-dev",
     "zip": "pnpm build && pnpm -F zipper zip",
     "zip:firefox": "pnpm build:firefox && pnpm -F zipper zip",
+    "ext:lint": "web-ext lint --source-dir dist --no-config-discovery --self-hosted",
+    "ext:run": "web-ext run --source-dir dist --no-config-discovery",
+    "ext:run:firefox": "web-ext run --source-dir dist --no-config-discovery --target firefox-desktop",
     "e2e": "pnpm zip && turbo e2e",
     "e2e:firefox": "pnpm zip:firefox && turbo e2e",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "preflight": "pnpm type-check && pnpm lint && pnpm test && pnpm build",
     "lint": "turbo lint --continue",
     "lint:fix": "turbo lint:fix --continue",
     "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
@@ -101,7 +105,8 @@
     "typescript-eslint": "^8.59.0",
     "vite": "^8.0.10",
     "vite-plugin-node-polyfills": "^0.26.0",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.5",
+    "web-ext": "^10.1.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json}": [

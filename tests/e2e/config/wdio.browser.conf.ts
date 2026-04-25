@@ -19,7 +19,9 @@ const chromeCapabilities = {
       '--disable-gpu',
       '--no-sandbox',
       '--disable-dev-shm-usage',
-      ...(IS_CI ? ['--headless'] : []),
+      // `--headless=new` is required for MV3 extensions to load in headless Chrome (the
+      // legacy `--headless` switch silently disables extension loading).
+      ...(IS_CI ? ['--headless=new'] : []),
     ],
     prefs: { 'extensions.ui.developer_mode': true },
     extensions: [bundledExtension],

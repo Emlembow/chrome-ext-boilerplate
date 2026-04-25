@@ -124,6 +124,17 @@ CEB_FOO=bar pnpm dev
 
 This boilerplate uses Tailwind v4's CSS-first config. There are no `tailwind.config.ts` files — configuration lives in `packages/ui/global.css` via `@theme` and `@source` directives. Adding more scan paths only requires editing that one CSS file.
 
+## E2E tests — known limitation
+
+`pnpm e2e` invokes WebdriverIO 9 against a freshly-built `dist-zip`. The harness works (browser launches, extension installs, smoke spec passes), but most extension-UI assertions are **flaky in headless Chrome** because MV3 extension UIs and `chrome://extensions/` shadow DOM access differ between headless and headed mode. Run with a desktop session for full coverage:
+
+```bash
+pnpm zip
+pnpm e2e        # leave CEB_CI unset → uses headed Chrome
+```
+
+Setting `CEB_CI=true` switches Chrome to `--headless=new`; the smoke spec still passes there but content-UI assertions may not.
+
 ## What's different from upstream
 
 This fork is brought current to April 2026 with breaking-version migrations:
